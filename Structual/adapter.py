@@ -7,7 +7,7 @@ class XLSMaker:
     def specific_request(self) -> str:
         return "*.xls files"
 
-# используется можественное наследование
+# используется множественное наследование
 class Adapter(PDFViews, XLSMaker):
     def request(self):
         return f"Remakes {self.specific_request()} on *.pdf files for PDFViews"
