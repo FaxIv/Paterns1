@@ -1,37 +1,41 @@
 from abc import ABC, abstractmethod
 
 
-class Instruction(ABC):
+class LaptopFactory(ABC):
     @abstractmethod
-    def make_inst(self):
+    def factory(self):
         pass
 
 
-class LaptopInstruction(Instruction):
-    def make_inst(self):
-        print('Laptop_instruction_text')
+class SamsungFactory(LaptopFactory):
+    def factory(self):
+        return SamsungLaptop()
 
 
-class PCInstruction(Instruction):
-    def make_inst(self):
-        print('PC_instruction_text')
+class AppleFactory(LaptopFactory):
+    def factory(self):
+        return AppleFactory()
 
 
-class Choice(ABC):
+class Laptop(ABC):
     @abstractmethod
-    def choice(self, type_):
+    def create_operation(self):
         pass
 
 
-class ChoiceInst(Choice):
-    def choice(self, type_):
-        if type_ == 'Laptop':
-            return LaptopInstruction()
-        elif type_ == 'PC':
-            return PCInstruction()
+class SamsungLaptop(Laptop):
+    def create_operation(self):
+        print('Laptop created by Samsung')
+        pass
+
+
+class AppleLaptop(Laptop):
+    def create_operation(self):
+        print('Laptop created by Apple')
+
 
 if __name__ == '__main__':
 
-    app = ChoiceInst()
-    app.choice('Laptop').make_inst()
-    app.choice('PC').make_inst()
+    laptop = SamsungFactory()
+    result = laptop.factory()
+    print(result.create_operation())
