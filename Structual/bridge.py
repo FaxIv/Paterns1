@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 
-class Interface:
+class UserInterface:
     def __init__(self, cloud: CloudTechnology):
         self.cloud = cloud
 
@@ -27,16 +27,16 @@ class AppleCloud(CloudTechnology):
         return "Apple cloud result"
 
 
-def client_code(interface: Interface):
-    print(interface.operation())
+def client_code(user_interface: UserInterface):
+    print(user_interface.operation())
 
 
 if __name__ == "__main__":
 
     cloud = GoogleCloud()
-    interface = Interface(cloud)
-    client_code(interface)
+    user_interface = UserInterface(cloud)
+    client_code(user_interface)
 
     cloud = AppleCloud()
-    interface = Interface(cloud)
-    client_code(interface)
+    user_interface = UserInterface(cloud)
+    client_code(user_interface)

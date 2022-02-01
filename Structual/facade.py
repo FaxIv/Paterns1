@@ -1,42 +1,38 @@
-from __future__ import annotations
+class DeviceAPI:
+    def connection(self):
+        return "Connected to device"
+
+    def get_info(self):
+        return "Get information from device"
+
+    def check_connection(self):
+        return True
 
 
-class Facade:
-
-    def __init__(self, module1: Module1, module2: Module2):
-        self._module1 = module1
-        self._module2 = module2
-
-    def func(self):
-        results = []
-        results.append(self._module1.func1_1())
-        results.append(self._module2.func2_1())
-        results.append(self._module1.func1_2())
-        results.append(self._module2.func2_2())
-        return "\n".join(results)
+class Info:
+    def formatting_info(self):
+        print("Formatting information from the device in a convenient format")
 
 
-class Module1:
-    def func1_1(self):
-        return "Module 1: ready for work."
-    def func1_2(self):
-        return "Module 1: started."
+class WriteTextInFile:
+    def write_text(self):
+        print("Writing information to a file for analyzing logs")
 
 
-class Module2:
-    def func2_1(self):
-        return "Module 2: ready for work."
+class SystemFacade:
+    def __init__(self, device_api, info, write_text):
+        self._device_api = device_api
+        self._info = info
+        self._write_text = write_text
 
-    def func2_2(self):
-        return "Module 2: started."
+    def facade_func(self):
+        if self._device_api.check_connection == True:
+            return self._device_api.connection().get_info()
 
 
-def client_code(facade: Facade):
-    print(facade.func(), end="")
+a = DeviceAPI()
+b = Info()
+c = WriteTextInFile()
 
-
-if __name__ == "__main__":
-    module1 = Module1()
-    module2 = Module2()
-    facade = Facade(module1, module2)
-    client_code(facade)
+client = SystemFacade(a, b, c)
+print(client.facade_func())
