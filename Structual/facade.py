@@ -1,9 +1,9 @@
 class DeviceAPI:
-    def connection(self):
-        return "Connected to device"
+    def connection(self, device):
+        print(f"Connected to device {device}")
 
     def get_info(self):
-        return "Get information from device"
+        print("Get information from device")
 
     def check_connection(self):
         return True
@@ -20,19 +20,19 @@ class WriteTextInFile:
 
 
 class SystemFacade:
-    def __init__(self, device_api, info, write_text):
-        self._device_api = device_api
-        self._info = info
-        self._write_text = write_text
 
-    def facade_func(self):
-        if self._device_api.check_connection == True:
-            return self._device_api.connection().get_info()
+    def create_connection(self, device_name):
+        if DeviceAPI().check_connection() == True:
+            return DeviceAPI().connection(device_name)
+
+    def create_entry(self):
+        DeviceAPI().get_info()
+        Info().formatting_info()
+        WriteTextInFile().write_text()
 
 
-a = DeviceAPI()
-b = Info()
-c = WriteTextInFile()
 
-client = SystemFacade(a, b, c)
-print(client.facade_func())
+client = SystemFacade()
+client.create_connection("Mikrotik")
+client.create_entry()
+print("\n")
