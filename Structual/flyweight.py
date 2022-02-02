@@ -26,7 +26,6 @@ class ElectronicsFactory:
         key = self.get_key(shared_data)
         if not self._electronics.get(key):
             self._electronics[key] = ElectronicsFlyweight(shared_data)
-
         return self._electronics[key]
 
     def list_flyweight_electronics(self):
@@ -36,10 +35,14 @@ class ElectronicsFactory:
         print("\n")
 
 
-def create_electronics(factory, creator, gadget_type, diagonal, display_matrix, ram, memory):
-    flyweight = factory.get_flyweight_electronics([creator, gadget_type])
-    flyweight.operation([diagonal, display_matrix, ram, memory])
+class ElectronicContext:
+    def create_electronics(self, factory, creator, gadget_type, diagonal, display_matrix, ram, memory):
+        flyweight = factory.get_flyweight_electronics([creator, gadget_type])
+        flyweight.operation([diagonal, display_matrix, ram, memory])
 
+# def create_electronics(factory, creator, gadget_type, diagonal, display_matrix, ram, memory):
+#     flyweight = factory.get_flyweight_electronics([creator, gadget_type])
+#     flyweight.operation([diagonal, display_matrix, ram, memory])
 
 
 factory = ElectronicsFactory([
@@ -51,8 +54,9 @@ factory = ElectronicsFactory([
 
 factory.list_flyweight_electronics()
 
-create_electronics(factory, "Samsung", "laptop", "15.2", "IPS", "8 GB", "128 SSD")
+creator = ElectronicContext()
 
-create_electronics(factory, "Samsung", "phone", "6.5", "IPS", "8 GB", "64 GB")
+creator.create_electronics(factory, "Samsung", "laptop", "15.2", "IPS", "8 GB", "128 SSD")
+creator.create_electronics(factory, "Samsung", "phone", "6.5", "IPS", "8 GB", "64 GB")
 
 factory.list_flyweight_electronics()

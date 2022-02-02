@@ -12,15 +12,15 @@ class ServiceObject(Interface):
         print("Response from service object")
 
 
-class Proxy(Interface):
+class LogProxyService(Interface):
 
     log_num = []
 
     def __init__(self, service):
-        self._service = service
+        self.service = service
 
     def response(self):
-        self._service.response()
+        self.service.response()
         self.log()
         print(self.log_num)
 
@@ -34,7 +34,7 @@ def client_code(service):
     service.response()
 
 
-a = Proxy(ServiceObject())
+a = LogProxyService(ServiceObject())
 client_code(a)
 
 
