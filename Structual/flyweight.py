@@ -40,10 +40,6 @@ class ElectronicContext:
         flyweight = factory.get_flyweight_electronics([creator, gadget_type])
         flyweight.operation([diagonal, display_matrix, ram, memory])
 
-# def create_electronics(factory, creator, gadget_type, diagonal, display_matrix, ram, memory):
-#     flyweight = factory.get_flyweight_electronics([creator, gadget_type])
-#     flyweight.operation([diagonal, display_matrix, ram, memory])
-
 
 factory = ElectronicsFactory([
     ["Samsung", "laptop"],
