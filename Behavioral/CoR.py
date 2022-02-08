@@ -3,19 +3,51 @@ from abc import ABC, abstractmethod
 
 class Interface(ABC):
     @abstractmethod
-    def get_next(self):
+    def set_next(self, worker):
         pass
 
     @abstractmethod
-    def operation(self):
+    def func(self, request):
         pass
 
 
-class AbstractProcessing(Interface):
+class BaseOption(Interface):
+    _worker = None
+
+    def set_next(self, worker):
+        self._worker = worker
+        return worker
+
     @abstractmethod
-    def get_next(self):
-        pass
+    def func(self, request):
+        if self._worker:
+            return self._worker.func(request)
 
-    @abstractmethod
-    def operation(self):
-        pass
+
+class JsonOption(BaseOption):
+    def func(self, request):
+        if request == "json":
+            return "Type JSON"
+        else:
+            return super().func(request)
+
+
+class XmlOption(BaseOption):
+    def func(self, request):
+        if request == "xml":
+            return "Type XML"
+        else:
+            return super().func(request)
+
+
+def client_code(worker):
+    result = worker.func('xml')
+    print(result)
+
+
+json = JsonOption()
+xml = XmlOption()
+
+json.set_next(xml)
+
+client_code(json)
