@@ -8,13 +8,9 @@ class DeviceAPI:
     def get_info(self):
         print("Get information from device")
 
-
-class Info:
     def formatting_info(self):
         print("Formatting information from the device in a convenient format")
 
-
-class OutputToConsole:
     def output(self):
         print("Info output to console")
 
@@ -74,15 +70,13 @@ class Invoker:
 
 
 api_object = DeviceAPI()
-format_object = Info()
-output_object = OutputToConsole()
 
 invoker_class = Invoker()
 
 invoker_class.add_command(CreateConnectionCommand(api_object))
 invoker_class.add_command(GetInfoCommand(api_object))
-invoker_class.add_command(FormattingCommand(format_object))
-invoker_class.add_command(OutputToConsoleCommand(output_object))
+invoker_class.add_command(FormattingCommand(api_object))
+invoker_class.add_command(OutputToConsoleCommand(api_object))
 
 invoker_class.option()
 
