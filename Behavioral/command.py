@@ -1,57 +1,91 @@
 from abc import ABC, abstractmethod
 
 
+class DeviceAPI:
+    def create_connection(self):
+        print("Connection created")
+
+    def get_info(self):
+        print("Get information from device")
+
+
+class Info:
+    def formatting_info(self):
+        print("Formatting information from the device in a convenient format")
+
+
+class OutputToConsole:
+    def output(self):
+        print("Info output to console")
+
+
 class CommandInterface(ABC):
     @abstractmethod
     def func(self):
         pass
 
 
-class CreateFolderCommand(CommandInterface):
+class CreateConnectionCommand(CommandInterface):
     def __init__(self, executor):
         self._executor = executor
 
     def func(self):
-        self._executor.create_folder()
+        self._executor.create_connection()
 
 
-class OpenFolderCommand(CommandInterface):
+class GetInfoCommand(CommandInterface):
     def __init__(self, executor):
         self._executor = executor
 
     def func(self):
-        self._executor.open_folder()
+        self._executor.get_info()
 
 
-class SaveFolderCommand(CommandInterface):
+class FormattingCommand(CommandInterface):
     def __init__(self, executor):
         self._executor = executor
 
     def func(self):
-        self._executor.save_folder()
+        self._executor.formatting_info()
 
 
-class DeleteFolderCommand(CommandInterface):
+class OutputToConsoleCommand(CommandInterface):
     def __init__(self, executor):
         self._executor = executor
 
     def func(self):
-        self._executor.delete_folder()
+        self._executor.output()
 
 
-class CreateNewOrOpenFolder:
-    def create_folder(self):
-        return "New folder created"
+class Invoker:
+    def __init__(self):
+        self.history = []
 
-    def open_folder(self):
-        return "Open folder"
+    def add_command(self, command):
+        self.history.append(command)
+
+    def option(self):
+        if self.history:
+            for executor in self.history:
+                executor.func()
+        else:
+            print("No command for execute")
 
 
-class SaveFolder:
-    def save_folder(self):
-        return "Folder saved"
+
+api_object = DeviceAPI()
+format_object = Info()
+output_object = OutputToConsole()
+
+invoker_class = Invoker()
+
+invoker_class.add_command(CreateConnectionCommand(api_object))
+invoker_class.add_command(GetInfoCommand(api_object))
+invoker_class.add_command(FormattingCommand(format_object))
+invoker_class.add_command(OutputToConsoleCommand(output_object))
+
+invoker_class.option()
 
 
-class DeleteFolder:
-    def delete_folder(self):
-        return "Folder deleted"
+
+
