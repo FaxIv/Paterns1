@@ -13,15 +13,18 @@ class EarthIterator(Iterator):
 
     def __next__(self):
         try:
-            value = self._collection[self._position]
+            # value = self._collection[self._position]
+
             if self._collection[self._position + 1] == 'lava':
                 self._position += 2
             else:
                 self._position += 1
                 self.forest.append(value)
+
         except IndexError:
             raise StopIteration()
-        return len(self.forest)
+        return value
+        # return self.forest
 
     def get_forest(self):
         print(self.forest)
@@ -40,5 +43,6 @@ class Earth(Iterable):
         print(self._collection)
 
 collect = Earth()
-print(collect.__iter__())
+# print(collect.__iter__())
 # collect.get_coll()
+print("\n".join(collect))
