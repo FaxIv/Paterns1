@@ -2,7 +2,7 @@ from abc import ABC
 
 
 class Mediator(ABC):
-    def func(self, sender, ev, target):
+    def func(self, sender, target):
         pass
 
 
@@ -13,24 +13,24 @@ class ConcreteMediator(Mediator):
         for elem in self._components:
             elem.mediator = self
 
-    def func(self, sender, ev, target):
+    def func(self, sender, target):
         if target == 'boss':
-            return self.boss(ev)
+            return self.react_boss(sender)
         elif target == 'manager':
-            return self.manager()
+            return self.react_manager()
         else:
-            return self.employee()
+            return self.react_employee()
 
-    def boss(self, ev):
-        if ev != 'employee':
+    def react_boss(self, sender):
+        if sender != 'employee':
             return self._components[0].response()
         else:
             print('Boss can`t talk with employee')
 
-    def manager(self):
+    def react_manager(self):
         return self._components[1].response()
 
-    def employee(self):
+    def react_employee(self):
         return self._components[2].response()
 
 
@@ -49,29 +49,29 @@ class BaseComponent:
 
 class Boss(BaseComponent):
     def request(self, target):
-        print('Request by boss can be for anyone')
-        self.mediator.func(self, 'boss', target)
+        print(f"Request by boss to {target} (can be for anyone)")
+        self.mediator.func('boss', target)
 
     def response(self):
-        print('Response by boss can be only for managers')
+        print('Response by boss (can be only for managers)')
 
 
 class Manager(BaseComponent):
     def request(self, target):
-        print("Request by manager can be for employee, manager or boss")
-        self.mediator.func(self, 'manager', target)
+        print(f"Request by manager to {target} (can be for employee, manager or boss)")
+        self.mediator.func('manager', target)
 
     def response(self):
-        print('Response by manager can be for anyone')
+        print('Response by manager (can be for anyone)')
 
 
 class Employee(BaseComponent):
     def request(self, target):
-        print('Request by employee can be only for manager or another employee')
-        self.mediator.func(self, 'employee', target)
+        print(f"Request by employee to {target} (can be only for manager or another employee)")
+        self.mediator.func('employee', target)
 
     def response(self):
-        print('Response by employee can be for anyone')
+        print('Response by employee (can be for anyone)')
 
 
 c1 = Boss()
@@ -79,4 +79,4 @@ c2 = Manager()
 c3 = Employee()
 l1 = [c1, c2, c3]
 mediator = ConcreteMediator(l1)
-c3.request('employee')
+c3.request('manager')

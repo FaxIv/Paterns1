@@ -43,10 +43,6 @@ class Memento(ABC):
     def get_state(self):
         pass
 
-    @abstractmethod
-    def get_date(self):
-        pass
-
 
 class ConcreteMemento(Memento):
     def __init__(self, state):
@@ -54,6 +50,7 @@ class ConcreteMemento(Memento):
 
     def get_state(self):
         return self._state
+
 
 class Caretaker:
     def __init__(self, origin):

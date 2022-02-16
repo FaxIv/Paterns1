@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 
 class Subject(ABC):
     @abstractmethod
-    def attach(self, obs):
+    def attach(self, observ):
         pass
 
     @abstractmethod
-    def detach(self, obs):
+    def detach(self, observ):
         pass
 
     @abstractmethod
@@ -16,7 +16,7 @@ class Subject(ABC):
 
 
 class WaiterSubject(Subject):
-    current_order = {}
+    _current_order = {}
     _employee_observers = []
 
     def attach(self, observ):
@@ -35,7 +35,7 @@ class WaiterSubject(Subject):
         if order == {}:
             print('This visitor did not order anything')
         else:
-            self.current_order = order
+            self._current_order = order
         self.notify()
 
 

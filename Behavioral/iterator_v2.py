@@ -3,10 +3,10 @@ import random
 
 
 class EarthIterator(Iterator):
+
     def __init__(self, collection):
         self._collection = collection
-        self._position = collection.index('forrest')
-        self._forest = []
+        self._position = 0
         self._curr_value = None
 
     def __next__(self):
@@ -20,34 +20,28 @@ class EarthIterator(Iterator):
         else:
             self._position += 1
             self.curr_value = value
-            self._forest.append(value)
-        return self.curr_value
 
-    def get_forest(self):
-        forrest = len(self._forest)
-        print(forrest)
+        return self.curr_value
 
 
 class Earth(Iterable):
 
     def __init__(self):
-        self._forest = []
-        collection = [random.choice(['forrest', 'lava']) for x in range(20)]
-        self._collection = collection
+        self._forrest = []
+        self._collection = []
+        for x in range(10):
+            for i in range(random.randint(1, 9)):
+                self._collection.append('forrest')
+            self._collection.extend(['lava', 'lava'])
 
     def __iter__(self):
         return EarthIterator(self._collection)
 
-    def get_collection(self):
-        return self._collection
+    def get_forrest(self):
+        for elem in self:
+            self._forrest.append(elem)
+        return len(self._forrest)
 
 
 collect = Earth()
-
-
-# print(collect.__iter__())
-# collect.get_coll()
-forest = []
-print(len(collect))
-
-# forest.append(c)
+print(collect.get_forrest())
